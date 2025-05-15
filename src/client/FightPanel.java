@@ -2,6 +2,7 @@ package client;
 
 import championAssets.*;
 import java.awt.*;
+import java.awt.event.*;
 import java.util.*;
 import javax.swing.*;
 import server.*;
@@ -16,7 +17,7 @@ import server.*;
  */
 public class FightPanel extends javax.swing.JFrame {
 
-    private CardPanel parentPanel;
+    private CardPanel ui;
     private String gameId;
     private Champion allyChampion;
     private GameClient client;
@@ -26,18 +27,19 @@ public class FightPanel extends javax.swing.JFrame {
     private Champion enemyChampion;
     private JButton[] buttonList;
     private Map<JButton, Pair> buttonValueMap;
-    
+    private String lastInfo;
+
     public FightPanel(String gameId, GameClient client, String enemyName, String enemyChampionName) {
         this.gameId = gameId;
         this.client = client;
-        this.parentPanel = client.getUi();
+        this.ui = client.getUi();
         this.enemyName = enemyName;
         this.enemyChampionName = enemyChampionName;
         buttonList = new JButton[6];
         buttonValueMap = new HashMap<>();
         allyChampion = client.choosenChampion;
 
-        Optional<Champion> ec = parentPanel.getChampionListModel().stream()
+        Optional<Champion> ec = ui.getChampionListModel().stream()
                 .filter(p -> p.getName().equals(enemyChampionName))
                 .findAny();
 
@@ -48,6 +50,7 @@ public class FightPanel extends javax.swing.JFrame {
     }
 
     void AfterInit() {
+        addWindowListener(new OnWindowClose(this));
         Ability[] abilities = allyChampion.getAbilities();
         allyChampionNameLabel.setText(client.name + " " + allyChampion.getName());
         Image aimg = allyChampion.getIcon().getImage();
@@ -67,37 +70,42 @@ public class FightPanel extends javax.swing.JFrame {
         enemyChampionHpBar.setValue((int) enemyChampion.getHP());
         enemyChampionHpLabel.setText(String.valueOf(enemyChampion.getHP()));// + " / " + String.valueOf(enemyChampion.getMaxHP()));
 
+        ui.getMessageTextArea().append("GAME STARTED ID: " + gameId + "\n");
         logTextArea.setText("GAME ID: " + gameId + "\n" + allyChampion.getName() + " VS " + enemyChampion.getName() + "\n");
-        
+
         buttonList[0] = ability1;
         buttonList[1] = ability2;
         buttonList[2] = ability3;
         buttonList[3] = ability4;
         buttonList[4] = ability5;
         buttonList[5] = ability6;
-        
-        for(int i=0; i<buttonList.length; i++){   
+
+        for (int i = 0; i < buttonList.length; i++) {
             buttonList[i].setVisible(false);
             buttonList[i].setText("");
-            if(abilities.length > i){
+            if (abilities.length > i) {
                 JLabel nameLabel = new JLabel(abilities[i].getName());
-                JLabel usesLeftLabel = new JLabel(abilities[i].getUsesLeft() + ""); 
-                
+                JLabel usesLeftLabel = new JLabel(abilities[i].getUsesLeft() + "");
+
                 Pair p = new Pair(nameLabel, usesLeftLabel);
                 buttonValueMap.put(buttonList[i], p);
-                
+
                 buttonList[i].setLayout(new BorderLayout());
                 JPanel cp = new JPanel(new BorderLayout());
                 cp.setOpaque(false);
-                
+
                 cp.add(nameLabel, BorderLayout.WEST);
                 cp.add(usesLeftLabel, BorderLayout.EAST);
                 buttonList[i].add(cp);
                 buttonList[i].setVisible(true);
-            }              
+            }
         }
+        lastInfo = "";
     }
 
+//    public static void applyClosing(JFrame frame) extends WindowClosing{
+////            frame.addWindowListener
+//    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -130,7 +138,7 @@ public class FightPanel extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         logTextArea = new javax.swing.JTextArea();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
 
         allyChampionPanel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 0, 102)));
@@ -369,11 +377,15 @@ public class FightPanel extends javax.swing.JFrame {
 
     private void endTourButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_endTourButtonActionPerformed
         // TODO add your handling code here:
+        client.sendMessage(
+                GameCommand.ATTACK.toString() + ">"
+                + gameId + ">"
+                + client.name + ">"
+                + "98");
     }//GEN-LAST:event_endTourButtonActionPerformed
 
     private void leaveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_leaveButtonActionPerformed
         // TODO add your handling code here:\
-//        onGameEnd();
         int returnToLobby = JOptionPane.showConfirmDialog(
                 this,
                 "Back to main menu",
@@ -383,6 +395,10 @@ public class FightPanel extends javax.swing.JFrame {
 
         if (returnToLobby == JOptionPane.YES_OPTION) {
             client.sendMessage(GameCommand.FORFEIT.toString() + ">" + gameId + ">" + client.choosenChampion.getName() + ">" + enemyName);
+            client.sendMessage(GameCommand.ATTACK.toString() + ">" + 
+                    gameId + ">" + 
+                    client.name + ">" + 
+                    "135");
         }
     }//GEN-LAST:event_leaveButtonActionPerformed
 
@@ -484,15 +500,6 @@ public class FightPanel extends javax.swing.JFrame {
 //        });
     }
 
-    public void endGame(boolean disconnected) {
-        if (disconnected) {
-            addGameMessage("Przeciwnik rozłączył się. Gra zakończona.");
-        } else {
-            addGameMessage("Gra zakończona.");
-        }
-
-        // Dodaj przycisk do interfejsu
-    }
 
     public void addGameMessage(String mess) {
         logTextArea.append(mess + "\n");
@@ -525,14 +532,41 @@ public class FightPanel extends javax.swing.JFrame {
         );
     }
 
-    public void adjustClientState(String info) {
-        logTextArea.append(info + "\n");
-        logTextArea.setCaretPosition(logTextArea.getDocument().getLength());
+    public void adjustClientState(String sender, String info) {
+//        if (!sender.equals(client.name)) {
+//            return;
+//        }
+        if (lastInfo.isBlank()) {
+            lastInfo = info;
+        }
+        boolean sendToMe = true;
+        if(info.contains("left!") && !sender.equals(client.name)) sendToMe = false;
+        System.out.println("LAST INFO: " + lastInfo + "\n NOW INFO: " + info);
+        if (logTextArea.getText().endsWith(info + "\n") && info.contains("left!") && sender.equals(client.name)) {
+            logTextArea.setForeground(Color.RED);
+            try {
+                Thread.sleep(100);
+            } catch (InterruptedException ex) {
+            }
+            logTextArea.setForeground(Color.BLACK);
+        } else if(sendToMe) {
+            logTextArea.append(info + "\n");
+            logTextArea.setCaretPosition(logTextArea.getDocument().getLength());
+        }
+        lastInfo = info + "\n";
     }
 
     public void addLogMessage(String mess) {
-        logTextArea.append(mess + "\n");
-        logTextArea.setCaretPosition(logTextArea.getDocument().getLength());
+        logTextArea.setForeground(Color.RED);
+        if (!logTextArea.getText().endsWith("TURN\n")) {
+            logTextArea.append(mess + "\n");
+            logTextArea.setCaretPosition(logTextArea.getDocument().getLength());
+        }
+        try {
+            Thread.sleep(100);
+        } catch (InterruptedException ex) {
+        }
+        logTextArea.setForeground(Color.BLACK);
     }
 
     public void decreaseAbility(int abilityIndex) {
@@ -540,28 +574,40 @@ public class FightPanel extends javax.swing.JFrame {
         int newValue = Integer.parseInt(labels.right.getText()) - 1;
         labels.right.setText(String.valueOf(newValue));
     }
-    public void onGameEnd() {
-//        int returnToLobby = JOptionPane.showConfirmDialog(
-//                this,
-//                "Back to main menu",
-//                "Return",
-//                JOptionPane.YES_OPTION,
-//                JOptionPane.INFORMATION_MESSAGE);
-//        if(returnToLobby == JOptionPane.YES_OPTION)
-//        {
-//            setVisible(false);
-//            parentPanel.setVisible(true);
-//        }
-    }
-    class Pair{
+
+    class Pair {
+
         JLabel left;
         JLabel right;
-        Pair(JLabel l, JLabel r){
+
+        Pair(JLabel l, JLabel r) {
             left = l;
             right = r;
         }
     }
-    
+
+    class OnWindowClose extends WindowAdapter {
+
+        private JFrame frame;
+
+        public OnWindowClose(JFrame frame) {
+            this.frame = frame;
+        }
+
+        @Override
+        public void windowClosing(WindowEvent e) {
+            int returnToLobby = JOptionPane.showConfirmDialog(
+                    frame,
+                    "Back to main menu",
+                    "Return",
+                    JOptionPane.YES_OPTION,
+                    JOptionPane.INFORMATION_MESSAGE);
+
+            if (returnToLobby == JOptionPane.YES_OPTION) {
+                client.sendMessage(GameCommand.FORFEIT.toString() + ">" + gameId + ">" + client.choosenChampion.getName() + ">" + enemyName);
+            }
+        }
+    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton ability1;
     private javax.swing.JButton ability2;

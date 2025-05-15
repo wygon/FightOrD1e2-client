@@ -108,8 +108,8 @@ public class GameClient {
     public void adjustClientState(String gameId, String sender, double senderHp, String target, double targetHp){
         ui.fightPanel.adjustClientState(gameId, sender, senderHp, target, targetHp);
     }
-    public void adjustClientState(String info){
-        ui.fightPanel.adjustClientState(info);
+    public void adjustClientState(String sender, String info){
+        ui.fightPanel.adjustClientState(sender, info);
     }
     public void gameResult(boolean win){
         if(win)

@@ -45,6 +45,7 @@ public class MenuClientThread extends Thread{
         String gameId;
         String sender;
         String info;
+        String target;
         String command = parts[0];
         switch(command)
         {
@@ -66,13 +67,6 @@ public class MenuClientThread extends Thread{
             case "GAME_ENEMY_FORFEIT":
                 client.gameResult(true);
                 break;
-            case "GAME_ATTACK":
-                gameId = parts[1];
-                sender = parts[2];
-                String target = parts[3];
-//                hp = Double.parseDouble(parts[4]);
-//                    client.attack(gameId, sender, target, hp);
-                break;
             case "GAME_NOT_YOUR_TURN":
                 client.notMyTurn();
                 break;
@@ -85,12 +79,13 @@ public class MenuClientThread extends Thread{
                 client.adjustClientState(gameId, sender, senderHp, target, targetHp);
                 break;
             case "GAME_APPLY_LOGS":
+                sender = parts[1];
                 try{
-                    info = parts[1];
+                    info = parts[2];
                 } catch(ArrayIndexOutOfBoundsException ex) {
                     info = "";
                 }
-                client.adjustClientState(info);
+                client.adjustClientState(sender, info);
                 break;
             case "GAME_APPLY_ABILITY_COUNT":
                 int abilityIndex = Integer.parseInt(parts[1]);
@@ -103,7 +98,5 @@ public class MenuClientThread extends Thread{
                 client.gameResult(false);
                 break;
         }
-        double hp;
-//        ui.getMessageTextArea().append(command);
     }
 }
