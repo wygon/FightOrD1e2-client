@@ -12,7 +12,7 @@ public class GameClient {
     protected PrintWriter out;
     protected BufferedReader in;
     protected Champion choosenChampion;
-    private String currentGameId;
+    protected String myGameId;
     protected boolean searchingGame;
     private boolean isConnected;
     
@@ -74,7 +74,16 @@ public class GameClient {
     public void findGame(){
         searchingGame = true;
         ui.showSearchingGameWindow(true);
+        ui.sgw.timerStart();
     }
+    
+    public void cancelFindGame(){
+        searchingGame = false;
+        ui.showSearchingGameWindow(false);
+        ui.sgw.timerStop();
+        ui.getMessageTextArea().append("Searching stopped.\n");
+    }
+    
     public void foundOponent(String gameId, String enemyName, String enemyChampion){
         ui.sgw.setVisible(false);
         ui.setVisible(false);

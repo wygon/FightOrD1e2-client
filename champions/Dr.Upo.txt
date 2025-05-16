@@ -1,0 +1,8 @@
+Dr. Upo (LIFESTEALER)
+Character Description:
+Dr. Upo is a mysterious fighter who combines magical power with life steal. His unique ability allows him to heal over time, adapting perfectly to dynamic combat.
+
+Skills:
+
+Upo upo – Attacks restore health for a limited duration. (30 HP per attack, lasts for 5 turns, 1 use)
+

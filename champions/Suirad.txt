@@ -1,0 +1,12 @@
+Suirad (FIGHTER)
+Character Description:
+Suirad is a durable melee fighter who weakens opponents through bleeding while increasing his own damage resistance.
+
+Skills:
+
+Ad boost – Increases physical damage to dominate the fight. (+10 AD, 2 uses)
+
+Bleeding – Applies a bleeding effect lasting until the end of the battle. (50 damage over time, 3 uses)
+
+TANKYYYY – Increases physical and magical resistance. (+5 to both resistances, 3 uses)
+

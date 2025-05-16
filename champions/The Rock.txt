@@ -1,0 +1,9 @@
+The Rock (TANK)
+Character Description:
+The Rock is a classic tank whose goal is to survive as long as possible and reflect received damage. Relentless and tough, he’s perfect for the front line.
+
+Skills:
+
+Rock+ – Temporarily increases physical resistance. (+5 Physical Resist, 2 uses)
+
+Thorns – Passive – Reflects part of the received damage back to the attacker. (15% damage return, always active – code: 112)

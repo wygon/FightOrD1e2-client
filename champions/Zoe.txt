@@ -1,0 +1,11 @@
+Zoe (MAGE)
+Character Description:
+Zoe is an unusual melee mage whose style is based on quick magical strikes and manipulating enemy position through sleep and dodges.
+
+Skills:
+
+Boom! – Deals powerful magical damage. (120 Magic Damage, 2 uses)
+
+Dodge – Avoids the enemy, increasing range. (+1 range, 1 use)
+
+Sleep – Puts the enemy to sleep and moves away, increasing distance. (+1 range, 3 uses)

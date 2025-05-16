@@ -53,6 +53,9 @@ public class MenuClientThread extends Thread{
                 ui.getMessageTextArea().append("Waiting for opponent...\n");
                 client.findGame();
                 break;
+            case "GAME_WAITING_CANCEL":
+                client.cancelFindGame();
+                break;
             case "GAME_FOUND":
                 gameId = parts[1];
                 String enemyName = parts[2];

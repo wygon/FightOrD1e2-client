@@ -1,0 +1,11 @@
+Healer (MAGE)
+Character Description:
+Healer is a support mage with great healing potential, yet surprisingly effective offensively. He has the ability to maintain a safe distance from enemies.
+
+Skills:
+
+Spark! – Summons lightning to strike the enemy. (70 Magic Damage, 7 uses)
+
+Dodge – Avoids the enemy and increases range. (+1 range, 3 uses)
+
+Revitalize – Restores health. (+70 HP, 8 uses)

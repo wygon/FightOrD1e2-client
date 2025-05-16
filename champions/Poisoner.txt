@@ -1,0 +1,10 @@
+Poisoner (FIGHTER)
+Character Description:
+Poisoner is a tactical melee fighter who combines physical and magical power. He specializes in poison and distance control.
+
+Skills:
+
+Poison – Poisons the enemy, dealing damage until the end of the battle. (50 damage over time, 2 uses)
+
+Run – Moves away from the enemy, becoming a ranged character for 1 turn. (+1 range, 3 uses)
+

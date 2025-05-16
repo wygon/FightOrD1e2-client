@@ -1,0 +1,9 @@
+e-rasmus (TANK)
+Character Description:
+E-rasmus is a modern version of a defensive hero. Balancing physical and magical resistance with damage reflection, he can withstand long battles.
+
+Skills:
+
+Rock+ – Increases both physical and magical resistance. (+5 to resistances, 2 uses)
+
+Thorns – Reflects a larger portion of damage back to the enemy. (30% damage return, 8 uses)

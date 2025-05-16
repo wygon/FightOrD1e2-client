@@ -1,0 +1,12 @@
+Nerag (FIGHTER)
+Character Description:
+Nerag is a brutal melee fighter who relies on powerful attacks and enhanced resistance. His blows are doubly deadly.
+
+Skills:
+
+Ad boost – Temporarily boosts attack strength. (+10 AD, 2 uses)
+
+Power fists – Delivers two hits instead of one in a single action. (x2 hits, 2 uses)
+
+TANKYYYY – Increases resistances for better survivability. (+5 to both resistances, 3 uses)
+

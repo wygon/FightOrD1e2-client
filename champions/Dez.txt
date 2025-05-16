@@ -1,0 +1,9 @@
+Dez (ASSASSIN)
+Character Description:
+Dez is a ruthless melee assassin who specializes in fast, double strikes and silent kills. He gives opponents no time to react.
+
+Skills:
+
+Double attack – Allows two strikes instead of one in a single action. (2 attacks, 2 uses)
+
+Throw shuriken – Throws a shuriken at the enemy, dealing high physical damage from a distance. (100 AD damage, 2 uses)

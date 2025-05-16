@@ -1,0 +1,17 @@
+Huwaei (ASSASSIN)
+Character Description:
+Huwaei is a hybrid ranged assassin using both magic and physical strikes. He can boost his damage, heal, evade, and most importantly – deal devastating magical attacks.
+
+Skills:
+
+Md boost – Increases magic damage until the end of the battle. (+10 Magic Damage, 1 use)
+
+Ad boost – Increases physical damage until the end of the battle. (+10 Attack Damage, 1 use)
+
+Spark! – Throws a lightning bolt directly at the enemy’s face. (70 Magic Damage, 1 use)
+
+Boom! – A powerful explosion that deals high magical damage. (120 Magic Damage, 1 use)
+
+Dodge – Evades the opponent’s attack and creates distance. (+1 range, 1 use)
+
+Revitalize – Restores some health points. (+80 HP, 1 use)

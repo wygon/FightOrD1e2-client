@@ -1,0 +1,12 @@
+Ka Six (ASSASSIN)
+Character Description:
+Ka Six is a master of quick kills and evasion. He can deal massive damage in an instant and escape when the situation becomes dangerous.
+
+Skills:
+
+Slash – A powerful slash that deals high physical damage. (150 AD damage, 1 use)
+
+Seeds – Throws projectiles that deal moderate physical damage. (80 AD damage, 2 uses)
+
+Jump out – Moves away from the enemy, gaining 1 point of range. (+1 range, 1 use)
+

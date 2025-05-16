@@ -1,0 +1,9 @@
+Butcher (LIFESTEALER)
+Character Description:
+Butcher is a ruthless fighter who drains life from his victims. The longer the battle, the stronger he becomes thanks to passive healing while attacking.
+
+Skills:
+
+Ad boost – Increases physical damage to finish enemies faster. (+10 AD, 3 uses)
+
+LifeSteal – Passive – Each attack restores a small amount of health until the end of the fight. (20 HP per attack, always active – code: 111)

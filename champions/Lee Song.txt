@@ -1,0 +1,11 @@
+Lee Song (FIGHTER)
+Character Description:
+Lee Song is an agile melee fighter who relies on a rapid increase in attack power and mobility. His fighting style focuses on eliminating opponents in a short amount of time.
+
+Skills:
+
+Ad boost – Temporarily increases physical damage, allowing for quicker victories. (+10 AD, 3 uses)
+
+Revitalize – Regenerates a portion of health points. (+120 HP, 3 uses)
+
+KICK – Kicks the opponent to create distance, becoming a ranged character for 1 turn. (+1 range, 2 uses)

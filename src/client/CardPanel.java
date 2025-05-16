@@ -7,6 +7,8 @@ package client;
 import championAssets.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.awt.geom.AffineTransform;
+import java.awt.image.BufferedImage;
 import java.io.*;
 import java.util.*;
 import javax.swing.*;
@@ -729,8 +731,19 @@ public class CardPanel extends javax.swing.JFrame {
         championIconImage.setIcon(new ImageIcon(scaledImg));
     }
 
-    public void applyChampionNickname(String name) {
+    public static BufferedImage flipImage(Image img){
+        int w = img.getWidth(null);
+        int h = img.getHeight(null);
         
+        BufferedImage flip = new BufferedImage(w, h, BufferedImage.TYPE_INT_ARGB);
+        Graphics2D g = flip.createGraphics();
+        
+        AffineTransform transform = AffineTransform.getScaleInstance(-1, 1);
+        transform.translate(-w, 0);
+        g.drawImage(img, transform, null);
+        g.dispose();
+        
+        return flip;
     }
     
     public void showError(String title, String mess)

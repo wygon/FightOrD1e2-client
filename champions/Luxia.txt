@@ -1,0 +1,11 @@
+Luxia (MAGE)
+Character Description:
+Luxia is a powerful ranged sorceress specializing in crushing magical attacks and healing. Her dark magic is unmatched in offensive combat.
+
+Skills:
+
+Magic ball – Sends a magical orb dealing high magic damage. (120 Magic Damage, 2 uses)
+
+Dark power – Dark magic that deals massive damage to the enemy. (250 Magic Damage, 1 use)
+
+Revitalize – Heals a portion of health. (+80 HP, 3 uses)

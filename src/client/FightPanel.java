@@ -3,6 +3,7 @@ package client;
 import championAssets.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.awt.image.BufferedImage;
 import java.util.*;
 import javax.swing.*;
 import server.*;
@@ -51,6 +52,7 @@ public class FightPanel extends javax.swing.JFrame {
 
     void AfterInit() {
         addWindowListener(new OnWindowClose(this));
+        setResizable(false);
         Ability[] abilities = allyChampion.getAbilities();
         allyChampionNameLabel.setText(client.name + " " + allyChampion.getName());
         Image aimg = allyChampion.getIcon().getImage();
@@ -60,16 +62,37 @@ public class FightPanel extends javax.swing.JFrame {
         allyChampionHpBar.setMaximum((int) allyChampion.getHP());
         allyChampionHpBar.setValue((int) allyChampion.getHP());
         allyChampionHpLabel.setText(String.valueOf(allyChampion.getHP()));// + " / " + String.valueOf(allyChampion.getMaxHP()));
+        allyChampionHpLabel2.setText(" / " + String.valueOf(allyChampion.getMaxHP()));
+        
         //==========================================
         enemyChampionNameLabel.setText(enemyName + " " + enemyChampion.getName());
-        Image eimg = enemyChampion.getIcon().getImage();
-        Image escaledImg = eimg.getScaledInstance(enemyChampionPanel.getWidth(), -1, Image.SCALE_SMOOTH);
-        enemyChampionIconLabel.setIcon(new ImageIcon(escaledImg));
+//        Image eimg = enemyChampion.getIcon().getImage();
+//        Image escaledImg = eimg.getScaledInstance(enemyChampionPanel.getWidth(), -1, Image.SCALE_SMOOTH);
+//        enemyChampionIconLabel.setIcon(new ImageIcon(escaledImg));
 
+        ImageIcon eimg = enemyChampion.getIcon();
+        int originalW = eimg.getIconWidth();
+        int originalH = eimg.getIconHeight();
+        
+        BufferedImage originalImg = new BufferedImage(originalW, originalH, BufferedImage.TYPE_INT_ARGB);
+        Graphics2D g2 = originalImg.createGraphics();
+        g2.drawImage(eimg.getImage(), 0, 0, null);
+        g2.dispose();
+        
+        Image escaledImg = originalImg.getScaledInstance(enemyChampionPanel.getWidth(), -1, Image.SCALE_SMOOTH);
+        
+        BufferedImage scaledBuffered = new BufferedImage(escaledImg.getWidth(null),escaledImg.getHeight(null), BufferedImage.TYPE_INT_ARGB);
+        Graphics2D g3 = scaledBuffered.createGraphics();
+        g3.drawImage(escaledImg, 0, 0, null);
+        g3.dispose();
+        BufferedImage flipped = ui.flipImage(scaledBuffered);
+        enemyChampionIconLabel.setIcon(new ImageIcon(flipped));
+        
         enemyChampionHpBar.setMaximum((int) enemyChampion.getHP());
         enemyChampionHpBar.setValue((int) enemyChampion.getHP());
         enemyChampionHpLabel.setText(String.valueOf(enemyChampion.getHP()));// + " / " + String.valueOf(enemyChampion.getMaxHP()));
-
+        enemyChampionHpLabel2.setText(" / " + String.valueOf(enemyChampion.getMaxHP()));
+        
         ui.getMessageTextArea().append("GAME STARTED ID: " + gameId + "\n");
         logTextArea.setText("GAME ID: " + gameId + "\n" + allyChampion.getName() + " VS " + enemyChampion.getName() + "\n");
 
@@ -116,15 +139,19 @@ public class FightPanel extends javax.swing.JFrame {
     private void initComponents() {
 
         allyChampionPanel = new javax.swing.JPanel();
-        allyChampionNameLabel = new javax.swing.JLabel();
-        allyChampionHpBar = new javax.swing.JProgressBar();
         allyChampionIconLabel = new javax.swing.JLabel();
+        jPanel1 = new javax.swing.JPanel();
+        allyChampionHpBar = new javax.swing.JProgressBar();
+        allyChampionHpLabel2 = new javax.swing.JLabel();
         allyChampionHpLabel = new javax.swing.JLabel();
+        allyChampionNameLabel = new javax.swing.JLabel();
         enemyChampionPanel = new javax.swing.JPanel();
-        enemyChampionNameLabel = new javax.swing.JLabel();
+        jPanel2 = new javax.swing.JPanel();
         enemyChampionHpBar = new javax.swing.JProgressBar();
-        enemyChampionIconLabel = new javax.swing.JLabel();
+        enemyChampionHpLabel2 = new javax.swing.JLabel();
         enemyChampionHpLabel = new javax.swing.JLabel();
+        enemyChampionNameLabel = new javax.swing.JLabel();
+        enemyChampionIconLabel = new javax.swing.JLabel();
         buttonPanel = new javax.swing.JPanel();
         autoAttackButton1 = new javax.swing.JButton();
         endTourButton = new javax.swing.JButton();
@@ -141,81 +168,107 @@ public class FightPanel extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
 
-        allyChampionPanel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 0, 102)));
-        allyChampionPanel.setPreferredSize(new java.awt.Dimension(300, 300));
-
-        allyChampionNameLabel.setText("ALLY NAME");
-
-        allyChampionHpBar.setValue(66);
+        allyChampionPanel.setPreferredSize(new java.awt.Dimension(300, 400));
+        allyChampionPanel.setLayout(new java.awt.BorderLayout());
 
         allyChampionIconLabel.setText("PHOTO");
+        allyChampionIconLabel.setVerticalAlignment(javax.swing.SwingConstants.TOP);
+        allyChampionPanel.add(allyChampionIconLabel, java.awt.BorderLayout.CENTER);
+
+        jPanel1.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+
+        allyChampionHpBar.setForeground(new java.awt.Color(76, 255, 0));
+        allyChampionHpBar.setValue(66);
+
+        allyChampionHpLabel2.setText("HEALTH/MAXHEALTH");
 
         allyChampionHpLabel.setText("HEALTH/MAXHEALTH");
 
-        javax.swing.GroupLayout allyChampionPanelLayout = new javax.swing.GroupLayout(allyChampionPanel);
-        allyChampionPanel.setLayout(allyChampionPanelLayout);
-        allyChampionPanelLayout.setHorizontalGroup(
-            allyChampionPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(allyChampionHpBar, javax.swing.GroupLayout.DEFAULT_SIZE, 298, Short.MAX_VALUE)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, allyChampionPanelLayout.createSequentialGroup()
-                .addGroup(allyChampionPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(allyChampionNameLabel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(allyChampionPanelLayout.createSequentialGroup()
-                        .addContainerGap()
-                        .addGroup(allyChampionPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(allyChampionHpLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(allyChampionIconLabel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+        allyChampionNameLabel.setText("ALLY NAME");
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(allyChampionHpBar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(allyChampionHpLabel)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(allyChampionHpLabel2))
+                            .addComponent(allyChampionNameLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(0, 38, Short.MAX_VALUE)))
                 .addContainerGap())
         );
-        allyChampionPanelLayout.setVerticalGroup(
-            allyChampionPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(allyChampionPanelLayout.createSequentialGroup()
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
                 .addComponent(allyChampionHpBar, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(5, 5, 5)
-                .addComponent(allyChampionHpLabel)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(allyChampionNameLabel)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(allyChampionIconLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 212, Short.MAX_VALUE)
-                .addContainerGap())
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(allyChampionHpLabel)
+                    .addComponent(allyChampionHpLabel2))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(allyChampionNameLabel))
         );
 
-        enemyChampionPanel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 0, 102)));
-        enemyChampionPanel.setPreferredSize(new java.awt.Dimension(300, 300));
+        allyChampionPanel.add(jPanel1, java.awt.BorderLayout.PAGE_START);
 
-        enemyChampionNameLabel.setText("ENEMY NAME");
+        enemyChampionPanel.setPreferredSize(new java.awt.Dimension(300, 400));
+        enemyChampionPanel.setLayout(new java.awt.BorderLayout());
 
+        enemyChampionHpBar.setForeground(new java.awt.Color(255, 0, 0));
         enemyChampionHpBar.setValue(100);
 
-        enemyChampionIconLabel.setText("PHOTO");
+        enemyChampionHpLabel2.setText("HEALTH/MAXHEALTH");
 
         enemyChampionHpLabel.setText("HEALTH/MAXHEALTH");
 
-        javax.swing.GroupLayout enemyChampionPanelLayout = new javax.swing.GroupLayout(enemyChampionPanel);
-        enemyChampionPanel.setLayout(enemyChampionPanelLayout);
-        enemyChampionPanelLayout.setHorizontalGroup(
-            enemyChampionPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(enemyChampionHpBar, javax.swing.GroupLayout.DEFAULT_SIZE, 298, Short.MAX_VALUE)
-            .addComponent(enemyChampionNameLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addGroup(enemyChampionPanelLayout.createSequentialGroup()
+        enemyChampionNameLabel.setText("ENEMY NAME");
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(enemyChampionPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(enemyChampionIconLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(enemyChampionHpLabel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap())
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(enemyChampionHpLabel)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(enemyChampionHpLabel2)
+                        .addContainerGap(50, Short.MAX_VALUE))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(enemyChampionNameLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(21, 21, 21))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(enemyChampionHpBar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addContainerGap())))
         );
-        enemyChampionPanelLayout.setVerticalGroup(
-            enemyChampionPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(enemyChampionPanelLayout.createSequentialGroup()
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
                 .addComponent(enemyChampionHpBar, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(2, 2, 2)
-                .addComponent(enemyChampionHpLabel)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(enemyChampionHpLabel)
+                    .addComponent(enemyChampionHpLabel2))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(enemyChampionNameLabel)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(enemyChampionIconLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 215, Short.MAX_VALUE)
-                .addContainerGap())
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
+
+        enemyChampionPanel.add(jPanel2, java.awt.BorderLayout.PAGE_START);
+
+        enemyChampionIconLabel.setText("PHOTO");
+        enemyChampionIconLabel.setVerticalAlignment(javax.swing.SwingConstants.TOP);
+        enemyChampionPanel.add(enemyChampionIconLabel, java.awt.BorderLayout.CENTER);
 
         autoAttackButton1.setText("Auto Attack");
         autoAttackButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -296,14 +349,14 @@ public class FightPanel extends javax.swing.JFrame {
                         .addComponent(endTourButton, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(40, 40, 40)
                         .addComponent(ability3, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(40, 40, 40)
+                        .addGap(43, 43, 43)
                         .addComponent(ability4, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(9, Short.MAX_VALUE))
             .addGroup(buttonPanelLayout.createSequentialGroup()
                 .addComponent(leaveButton, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(40, 40, 40)
                 .addComponent(ability5, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(40, 40, 40)
+                .addGap(43, 43, 43)
                 .addComponent(ability6, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -339,36 +392,30 @@ public class FightPanel extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addGap(27, 27, 27)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(allyChampionPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 391, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 18, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(63, 63, 63)
-                        .addComponent(allyChampionPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 542, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(enemyChampionPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(29, 29, 29))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(buttonPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap())))
+                        .addComponent(enemyChampionPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap())
+                    .addComponent(buttonPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(15, 15, 15)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(20, 20, 20)
-                        .addComponent(enemyChampionPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 87, Short.MAX_VALUE)
+                        .addComponent(enemyChampionPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 400, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(buttonPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(allyChampionPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(allyChampionPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 400, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(19, 19, 19))
         );
 
@@ -499,8 +546,7 @@ public class FightPanel extends javax.swing.JFrame {
 //            }
 //        });
     }
-
-
+    
     public void addGameMessage(String mess) {
         logTextArea.append(mess + "\n");
         logTextArea.setCaretPosition(logTextArea.getDocument().getLength());
@@ -508,16 +554,13 @@ public class FightPanel extends javax.swing.JFrame {
 
     public void adjustUi(String gameId, String sender, String target, Double hp) {
         if (target.equals(client.name)) {
-            allyChampionHpLabel.setText(
-                    String.valueOf(
-                            Double.parseDouble(allyChampionHpLabel.getText()) - hp
-                    ));
+            double hpParsed = Double.parseDouble(allyChampionHpLabel.getText()) -  hp;
+            allyChampionHpLabel.setText(String.valueOf(hpParsed));
+            allyChampionHpBar.setValue((int) hpParsed);
         } else {
-            enemyChampionHpLabel.setText(
-                    String.valueOf(
-                            Double.parseDouble(enemyChampionHpLabel.getText()) - hp
-                    ));
-
+            double hpParsed = Double.parseDouble(enemyChampionHpLabel.getText()) -  hp;
+            enemyChampionHpLabel.setText(String.valueOf(hpParsed));
+            enemyChampionHpBar.setValue((int) hpParsed);
         }
         logTextArea.append(sender + "] hit [" + target + "] " + hp + "\n");
         logTextArea.setCaretPosition(logTextArea.getDocument().getLength());
@@ -525,11 +568,13 @@ public class FightPanel extends javax.swing.JFrame {
 
     public void adjustClientState(String gameId, String sender, double senderHp, String target, double targetHp) {
         allyChampionHpLabel.setText(
-                String.valueOf(senderHp)
+                String.valueOf((int) senderHp)
         );
+        allyChampionHpBar.setValue((int) senderHp);
         enemyChampionHpLabel.setText(
-                String.valueOf(targetHp)
+                String.valueOf((int) targetHp)
         );
+        enemyChampionHpBar.setValue((int) targetHp);
     }
 
     public void adjustClientState(String sender, String info) {
@@ -548,7 +593,7 @@ public class FightPanel extends javax.swing.JFrame {
                 Thread.sleep(100);
             } catch (InterruptedException ex) {
             }
-            logTextArea.setForeground(Color.BLACK);
+            logTextArea.setForeground(Color.WHITE);
         } else if(sendToMe) {
             logTextArea.append(info + "\n");
             logTextArea.setCaretPosition(logTextArea.getDocument().getLength());
@@ -566,7 +611,7 @@ public class FightPanel extends javax.swing.JFrame {
             Thread.sleep(100);
         } catch (InterruptedException ex) {
         }
-        logTextArea.setForeground(Color.BLACK);
+        logTextArea.setForeground(Color.WHITE);
     }
 
     public void decreaseAbility(int abilityIndex) {
@@ -617,6 +662,7 @@ public class FightPanel extends javax.swing.JFrame {
     private javax.swing.JButton ability6;
     private javax.swing.JProgressBar allyChampionHpBar;
     private javax.swing.JLabel allyChampionHpLabel;
+    private javax.swing.JLabel allyChampionHpLabel2;
     private javax.swing.JLabel allyChampionIconLabel;
     private javax.swing.JLabel allyChampionNameLabel;
     private javax.swing.JPanel allyChampionPanel;
@@ -625,9 +671,12 @@ public class FightPanel extends javax.swing.JFrame {
     private javax.swing.JButton endTourButton;
     private javax.swing.JProgressBar enemyChampionHpBar;
     private javax.swing.JLabel enemyChampionHpLabel;
+    private javax.swing.JLabel enemyChampionHpLabel2;
     private javax.swing.JLabel enemyChampionIconLabel;
     private javax.swing.JLabel enemyChampionNameLabel;
     private javax.swing.JPanel enemyChampionPanel;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JButton leaveButton;
     private javax.swing.JTextArea logTextArea;

@@ -4,6 +4,9 @@
  */
 package client;
 
+import javax.swing.UIManager;
+import com.formdev.flatlaf.FlatDarkLaf;
+
 /**
  *
  * @author wygon
@@ -156,7 +159,9 @@ public class LoginDialog extends javax.swing.JDialog {
             java.util.logging.Logger.getLogger(LoginDialog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
-
+        try {
+            UIManager.setLookAndFeel(new FlatDarkLaf());
+        } catch(Exception ex) {System.out.println("Nie udalo sie zaladowac FlatLaf Dark " + ex);}
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
