@@ -100,6 +100,14 @@ public class MenuClientThread extends Thread{
             case "GAME_RESULT_LOSE":
                 client.gameResult(false);
                 break;
+            case "GAME_GET_STATS":
+                target = parts[1];
+                String total = parts[2];
+                String win = parts[3];
+                String lose = parts[4];
+                String players = parts[5];
+                client.applyStats(target, total, win, lose, players);
+                break;
         }
     }
 }

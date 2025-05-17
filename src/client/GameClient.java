@@ -19,6 +19,7 @@ public class GameClient {
     protected Socket socket;
     protected final int SERVER_PORT = 12345;
     protected final String SERVER_ADDRESS = "127.0.0.1";
+
     protected InetAddress iAddress;
     
      public GameClient(CardPanel ui, String nickname) {
@@ -36,15 +37,16 @@ public class GameClient {
         ui.getReconnectButton().setVisible(false);
         try {
             iAddress = InetAddress.getByName(SERVER_ADDRESS);
-            ui.getMessageTextArea().append("Connected to chat.\n");
+            ui.getMessageTextArea().append("Connecting...\n");
         } catch (IOException e) {
             System.exit(0);
         }
 
         try {
             socket = new Socket(iAddress, SERVER_PORT);
+            ui.getMessageTextArea().append("Connected to chat.\n");
         } catch (IOException e) {
-            ui.getMessageTextArea().append("Connection failed");
+            ui.getMessageTextArea().append("Connection failed.\n");
             isConnected = false;
             ui.getReconnectButton().setVisible(true);
             return;
@@ -58,7 +60,6 @@ public class GameClient {
             ui.getMessageTextArea().append("Error: " + e.getMessage());
             ui.getReconnectButton().setVisible(true);
         }
-//        ui.getReconnectButton().setVisible(!isConnected);
     }
 
     public void sendMessage(String mess)
@@ -141,6 +142,11 @@ public class GameClient {
     public void decreaseAbility(int abilityIndex){
         ui.fightPanel.decreaseAbility(abilityIndex);
     }
+    
+    public void applyStats(String name, String total, String win, String lose, String players){
+        ui.applyStats(name, total, win, lose, players);
+    }
+    
     public void gameResultLose(){
         
     }

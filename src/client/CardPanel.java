@@ -25,12 +25,12 @@ public class CardPanel extends javax.swing.JFrame {
     GameClient client;
     protected SearchingGameWindow sgw;
     protected FightPanel fightPanel;
-    
+
     public CardPanel(String nickname) {
         this.nickname = nickname;
         myInitBefore();
         initComponents();
-        
+
         this.client = new GameClient(this, nickname);
         this.client.connect();
         myInitAfter();
@@ -56,17 +56,17 @@ public class CardPanel extends javax.swing.JFrame {
         addWindowListener(closer);
     }
 
-    public void fightStart(String gameId, String enemyName, String enemyChampion)
-    {
+    public void fightStart(String gameId, String enemyName, String enemyChampion) {
         fightPanel = new FightPanel(gameId, client, enemyName, enemyChampion);
         fightPanel.setVisible(true);
     }
-    public void showSearchingGameWindow(boolean value)
-    {
+
+    public void showSearchingGameWindow(boolean value) {
         System.out.println("OPENING WAITING SCREEN");
         sgw.setVisible(value);
         setVisible(!value);
     }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -115,6 +115,32 @@ public class CardPanel extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         championListLabel = new javax.swing.JLabel();
         returnMenuButton = new javax.swing.JButton();
+        ProfileCard = new javax.swing.JPanel();
+        jPanel9 = new javax.swing.JPanel();
+        returnMenuButton1 = new javax.swing.JButton();
+        profileNameLabel = new javax.swing.JLabel();
+        jPanel6 = new javax.swing.JPanel();
+        jPanel7 = new javax.swing.JPanel();
+        jScrollPane5 = new javax.swing.JScrollPane();
+        allPlayerJList = new javax.swing.JList<>();
+        jLabel3 = new javax.swing.JLabel();
+        searchTextField = new javax.swing.JTextField();
+        searchButton = new javax.swing.JButton();
+        jPanel8 = new javax.swing.JPanel();
+        allTimeStatisticLabel = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        winCountLabel = new javax.swing.JLabel();
+        jLabel8 = new javax.swing.JLabel();
+        totalCountLabel = new javax.swing.JLabel();
+        jLabel10 = new javax.swing.JLabel();
+        loseCountLabel = new javax.swing.JLabel();
+        jMenuBar1 = new javax.swing.JMenuBar();
+        jMenu1 = new javax.swing.JMenu();
+        jMenu2 = new javax.swing.JMenu();
+        jMenuItem1 = new javax.swing.JMenuItem();
+        jMenuItem2 = new javax.swing.JMenuItem();
+        jMenuItem3 = new javax.swing.JMenuItem();
+        jMenuItem4 = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Fight Or Die v2");
@@ -292,10 +318,12 @@ public class CardPanel extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(reconnectButton))
                     .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 294, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(53, Short.MAX_VALUE))
+                .addContainerGap(59, Short.MAX_VALUE))
         );
 
         getContentPane().add(UserMainCard, "UserMainCard");
+
+        ChampionsCard.setPreferredSize(new java.awt.Dimension(1020, 600));
 
         championList.setModel(championListDefaultModel);
         championList.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -310,7 +338,9 @@ public class CardPanel extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(championList);
 
-        championIconPanel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 255, 204)));
+        jPanel3.setPreferredSize(new java.awt.Dimension(200, 266));
+
+        championIconImage.setVerticalAlignment(javax.swing.SwingConstants.BOTTOM);
 
         javax.swing.GroupLayout championIconPanelLayout = new javax.swing.GroupLayout(championIconPanel);
         championIconPanel.setLayout(championIconPanelLayout);
@@ -318,15 +348,15 @@ public class CardPanel extends javax.swing.JFrame {
             championIconPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(championIconPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(championIconImage, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(19, Short.MAX_VALUE))
+                .addComponent(championIconImage, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         championIconPanelLayout.setVerticalGroup(
             championIconPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(championIconPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(championIconImage, javax.swing.GroupLayout.DEFAULT_SIZE, 225, Short.MAX_VALUE)
-                .addContainerGap())
+                .addComponent(championIconImage, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(22, Short.MAX_VALUE))
         );
 
         championNameLabel.setFont(new java.awt.Font("Segoe UI", 0, 48)); // NOI18N
@@ -355,7 +385,7 @@ public class CardPanel extends javax.swing.JFrame {
                     .addComponent(adLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(mdLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(armorLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(mArmorLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(mArmorLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 238, Short.MAX_VALUE)
                     .addComponent(roleLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
@@ -388,7 +418,7 @@ public class CardPanel extends javax.swing.JFrame {
                     .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(championIconPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(17, 17, 17))
+                .addGap(66, 66, 66))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -453,7 +483,7 @@ public class CardPanel extends javax.swing.JFrame {
                     .addComponent(championListLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(192, 192, 192)
                 .addGroup(ChampionsCardLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, 540, Short.MAX_VALUE)
                     .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -477,15 +507,181 @@ public class CardPanel extends javax.swing.JFrame {
 
         getContentPane().add(ChampionsCard, "ChampionsCard");
 
+        ProfileCard.setName(""); // NOI18N
+        ProfileCard.setPreferredSize(new java.awt.Dimension(1020, 600));
+        ProfileCard.setLayout(new java.awt.BorderLayout());
+
+        jPanel9.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        returnMenuButton1.setText("Return to main menu");
+        returnMenuButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                returnMenuButton1ActionPerformed(evt);
+            }
+        });
+        jPanel9.add(returnMenuButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 10, -1, 35));
+
+        profileNameLabel.setFont(new java.awt.Font("Segoe UI", 0, 48)); // NOI18N
+        profileNameLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        profileNameLabel.setText("WYGON");
+        profileNameLabel.setName(""); // NOI18N
+        jPanel9.add(profileNameLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 6, 1010, 73));
+
+        ProfileCard.add(jPanel9, java.awt.BorderLayout.NORTH);
+
+        jPanel6.setLayout(new java.awt.BorderLayout());
+
+        allPlayerJList.setModel(new javax.swing.AbstractListModel<String>() {
+            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
+            public int getSize() { return strings.length; }
+            public String getElementAt(int i) { return strings[i]; }
+        });
+        allPlayerJList.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
+            public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
+                allPlayerJListValueChanged(evt);
+            }
+        });
+        jScrollPane5.setViewportView(allPlayerJList);
+
+        jLabel3.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel3.setText("PLAYER LIST");
+
+        searchTextField.setToolTipText("");
+        searchTextField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                searchTextFieldActionPerformed(evt);
+            }
+        });
+
+        searchButton.setFont(new java.awt.Font("Segoe UI", 0, 10)); // NOI18N
+        searchButton.setText("SEARCH");
+        searchButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                searchButtonActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
+        jPanel7.setLayout(jPanel7Layout);
+        jPanel7Layout.setHorizontalGroup(
+            jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel7Layout.createSequentialGroup()
+                .addGap(45, 45, 45)
+                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(jPanel7Layout.createSequentialGroup()
+                        .addComponent(searchTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(searchButton, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(jScrollPane5))
+                .addGap(78, 78, 78))
+        );
+        jPanel7Layout.setVerticalGroup(
+            jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel7Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel3)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(searchTextField, javax.swing.GroupLayout.DEFAULT_SIZE, 32, Short.MAX_VALUE)
+                    .addComponent(searchButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 434, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+
+        jPanel6.add(jPanel7, java.awt.BorderLayout.LINE_START);
+
+        jPanel8.setName("ProfileCard"); // NOI18N
+        jPanel8.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        allTimeStatisticLabel.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
+        allTimeStatisticLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        allTimeStatisticLabel.setText("ALL TIME STATISTICS");
+        allTimeStatisticLabel.setVerticalAlignment(javax.swing.SwingConstants.TOP);
+        jPanel8.add(allTimeStatisticLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 30, 480, 80));
+
+        jLabel5.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jLabel5.setText("Total games");
+        jPanel8.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 90, 140, 60));
+
+        winCountLabel.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        winCountLabel.setText("0");
+        jPanel8.add(winCountLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 150, 90, 40));
+
+        jLabel8.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jLabel8.setText("Games lost");
+        jPanel8.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 200, 140, 50));
+
+        totalCountLabel.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        totalCountLabel.setText("0");
+        jPanel8.add(totalCountLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 100, 90, 40));
+
+        jLabel10.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jLabel10.setText("Games won");
+        jPanel8.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 145, 140, 50));
+
+        loseCountLabel.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        loseCountLabel.setText("0");
+        jPanel8.add(loseCountLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 210, 90, 40));
+
+        jPanel6.add(jPanel8, java.awt.BorderLayout.CENTER);
+
+        ProfileCard.add(jPanel6, java.awt.BorderLayout.CENTER);
+
+        getContentPane().add(ProfileCard, "ProfileCard");
+
+        jMenu1.setText("File");
+        jMenuBar1.add(jMenu1);
+
+        jMenu2.setText("Edit");
+
+        jMenuItem1.setText("FlatLaf Dark");
+        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem1ActionPerformed(evt);
+            }
+        });
+        jMenu2.add(jMenuItem1);
+
+        jMenuItem2.setText("FlatLaf Light");
+        jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem2ActionPerformed(evt);
+            }
+        });
+        jMenu2.add(jMenuItem2);
+
+        jMenuItem3.setText("FlatLaf Intelli");
+        jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem3ActionPerformed(evt);
+            }
+        });
+        jMenu2.add(jMenuItem3);
+
+        jMenuItem4.setText("FlatLaf Dracula");
+        jMenuItem4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem4ActionPerformed(evt);
+            }
+        });
+        jMenu2.add(jMenuItem4);
+
+        jMenuBar1.add(jMenu2);
+
+        setJMenuBar(jMenuBar1);
+
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void findGameButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_findGameButtonActionPerformed
         // TODO add your handling code here:
 //        System.out.println("WYBRANY CHAMPION: " + client.choosenChampion.getName());
-        if(client.choosenChampion == null)
-        {
-            showError("","Choose champion before game.");
+        if (client.choosenChampion == null) {
+            showError("", "Choose champion before game.");
             return;
         }
         client.sendMessage(GameCommand.FIND.toString() + ">" + client.choosenChampion.getName());
@@ -542,7 +738,9 @@ public class CardPanel extends javax.swing.JFrame {
         );
 
         if (option == JOptionPane.YES_OPTION) {
-            client.out.println("ENDLEAVEEND");
+            if (client.out != null) {
+                client.out.println("ENDLEAVEEND");
+            }
             dispose();
             System.exit(0);
         }
@@ -550,7 +748,15 @@ public class CardPanel extends javax.swing.JFrame {
 
     private void profileButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_profileButtonActionPerformed
         // TODO add your handling code here:
-        System.out.println(championListModel);
+        profileNameLabel.setText(client.name);
+        if(client.out != null){
+            client.sendMessage(GameCommand.GET_STATS.toString() + ">" + nickname);
+        } else{
+            allTimeStatisticLabel.setText("CONNECTION ERROR");
+        }
+        CardLayout cl = (CardLayout) getContentPane().getLayout();
+        cl.show(getContentPane(), "ProfileCard");
+        System.out.println("Profile button clicked");
     }//GEN-LAST:event_profileButtonActionPerformed
 
     private void messageTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_messageTextFieldActionPerformed
@@ -581,8 +787,8 @@ public class CardPanel extends javax.swing.JFrame {
                     .findFirst()
                     .orElse(null);
             if (activeChampion != null) {
-               chooseChampionLabel.setText("CHOOSEN CHAMPION: " + selectedChampion);
-               client.choosenChampion = activeChampion;
+                chooseChampionLabel.setText("CHOOSEN CHAMPION: " + selectedChampion);
+                client.choosenChampion = activeChampion;
                 applyChampionCard();
             }
             System.out.println(selectedChampion);
@@ -599,6 +805,54 @@ public class CardPanel extends javax.swing.JFrame {
         // TODO add your handling code here:
         client.connect();
     }//GEN-LAST:event_reconnectButtonActionPerformed
+
+    private void searchTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchTextFieldActionPerformed
+        // TODO add your handling code here:
+
+    }//GEN-LAST:event_searchTextFieldActionPerformed
+
+    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+        // TODO add your handling code here:
+        switchGuiType("com.formdev.flatlaf.FlatDarkLaf");
+    }//GEN-LAST:event_jMenuItem1ActionPerformed
+
+    private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
+        // TODO add your handling code here:
+        switchGuiType("com.formdev.flatlaf.FlatLightLaf");
+    }//GEN-LAST:event_jMenuItem2ActionPerformed
+
+    private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
+        // TODO add your handling code here:
+        switchGuiType("com.formdev.flatlaf.FlatIntelliJLaf");
+    }//GEN-LAST:event_jMenuItem3ActionPerformed
+
+    private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
+        // TODO add your handling code here:
+        switchGuiType("com.formdev.flatlaf.FlatDarculaLaf");
+    }//GEN-LAST:event_jMenuItem4ActionPerformed
+
+    private void searchButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchButtonActionPerformed
+        // TODO add your handling code here:
+        if(!searchTextField.getText().isEmpty())
+        client.sendMessage(GameCommand.GET_STATS.toString() + ">" + searchTextField.getText());
+    }//GEN-LAST:event_searchButtonActionPerformed
+
+    private void returnMenuButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_returnMenuButton1ActionPerformed
+        // TODO add your handling code here:
+        CardLayout cl = (CardLayout) getContentPane().getLayout();
+        cl.show(getContentPane(), "UserMainCard");
+        System.out.println("MainOption button clicked");
+    }//GEN-LAST:event_returnMenuButton1ActionPerformed
+
+    private void allPlayerJListValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_allPlayerJListValueChanged
+        // TODO add your handling code here:
+        JList list = (JList) evt.getSource();
+        String selectedPlayer = (String) list.getSelectedValue();
+        if (selectedPlayer != null) {
+            searchTextField.setText(selectedPlayer);
+        }
+    }//GEN-LAST:event_allPlayerJListValueChanged
+    
     public JTextArea getMessageTextArea() {
         return messageTextArea;
     }
@@ -606,7 +860,7 @@ public class CardPanel extends javax.swing.JFrame {
     public JTextField getMessageTextField() {
         return messageTextField;
     }
-    
+
     public String getNickname() {
         return nickname;
     }
@@ -614,13 +868,15 @@ public class CardPanel extends javax.swing.JFrame {
     public Champion getChoosenChampion() {
         return client.choosenChampion;
     }
-    public JButton getReconnectButton(){
+
+    public JButton getReconnectButton() {
         return reconnectButton;
     }
-    
+
     public ArrayList<Champion> getChampionListModel() {
         return championListModel;
     }
+
     /**
      * @param args the command line arguments
      */
@@ -657,6 +913,7 @@ public class CardPanel extends javax.swing.JFrame {
             }
         });
     }
+
     //Configuring champions
     private void configureChampion(Champion champion, String[] parts) {
         champion.setName(parts[0]);
@@ -704,10 +961,34 @@ public class CardPanel extends javax.swing.JFrame {
                         throw new IllegalArgumentException("Invalid Chmapion type");
                 };
                 configureChampion(champion, parts);
+                applyChampionDescription(champion);
                 configureAbilities(champion, bigParts[2]);
                 championListModel.add(champion);
                 line = reader.readLine();
             }
+            reader.close();
+        } catch (Exception ex) {
+//            Logger.getLogger(FightOrD1e.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println("Reading champion error :)" + ex);
+        }
+    }
+
+    public void applyChampionDescription(Champion champ) {
+        try {
+            String fullDescription = "";
+            BufferedReader reader = new BufferedReader(new FileReader("champions/description.txt"));
+            String line = reader.readLine();
+            while (line != null) {
+                String[] parts = line.split(";");
+                String champName = parts[0];
+                String champDescription = parts[1];
+                if (champ.getName().equals(champName)) {
+                    fullDescription = champDescription.replace("\\n", "\n\n");
+                    break;
+                }
+                line = reader.readLine();
+            }
+            champ.setDescription(fullDescription);
             reader.close();
         } catch (Exception ex) {
 //            Logger.getLogger(FightOrD1e.class.getName()).log(Level.SEVERE, null, ex);
@@ -724,31 +1005,32 @@ public class CardPanel extends javax.swing.JFrame {
         mdLabel.setText("Magic Damage: " + activeChampion.getMagicDamage());
         armorLabel.setText("Physical Resist: " + activeChampion.getPhysicalResist());
         mArmorLabel.setText("Magic Resist: " + activeChampion.getMagicResist());
-        championDescriptionTextPane.setText(activeChampion.toString().trim());
+        championDescriptionTextPane.setText(activeChampion.getDescription());
 
         Image img = activeChampion.getIcon().getImage();
         Image scaledImg = img.getScaledInstance(championIconPanel.getWidth(), -1, Image.SCALE_SMOOTH);
         championIconImage.setIcon(new ImageIcon(scaledImg));
     }
 
-    public static BufferedImage flipImage(Image img){
+    public static BufferedImage flipImage(Image img) {
         int w = img.getWidth(null);
         int h = img.getHeight(null);
-        
+
         BufferedImage flip = new BufferedImage(w, h, BufferedImage.TYPE_INT_ARGB);
         Graphics2D g = flip.createGraphics();
-        
+
         AffineTransform transform = AffineTransform.getScaleInstance(-1, 1);
         transform.translate(-w, 0);
         g.drawImage(img, transform, null);
         g.dispose();
-        
+
         return flip;
     }
-    
-    public void showError(String title, String mess)
-    {
-        if(title.isBlank()) title = "Error";
+
+    public void showError(String title, String mess) {
+        if (title.isBlank()) {
+            title = "Error";
+        }
 //        if(client.choosenChampion == null)
 //        {
         JOptionPane.showMessageDialog(this,
@@ -756,12 +1038,43 @@ public class CardPanel extends javax.swing.JFrame {
                 title,
                 JOptionPane.ERROR_MESSAGE);
 //        }
+
     }
+
+    private void switchGuiType(String newGuiName) {
+        try {
+            UIManager.setLookAndFeel(newGuiName);
+            for (Window w : Window.getWindows()) {
+                SwingUtilities.updateComponentTreeUI(w);
+                w.pack();
+            }
+        } catch (Exception ex) {
+            System.out.println("Error with writing new gui" + ex);
+        }
+    }
+    
+    public void applyStats(String name, String total, String win, String lose, String p){
+        String[] playersArray = p.split(",");
+        DefaultListModel<String> playersList = new DefaultListModel<>();
+        for(var pl : playersArray) playersList.addElement(pl);
+        allPlayerJList.setModel(playersList);
+        
+        profileNameLabel.setText(name);
+        totalCountLabel.setText(total);
+        winCountLabel.setText(win);
+        loseCountLabel.setText(lose);
+        allTimeStatisticLabel.setText("ALL TIME STATISTICS");
+    }
+    
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel ChampionsCard;
     private javax.swing.JPanel MainOptionPanel;
+    private javax.swing.JPanel ProfileCard;
     private javax.swing.JPanel UserMainCard;
     private javax.swing.JLabel adLabel;
+    private javax.swing.JList<String> allPlayerJList;
+    private javax.swing.JLabel allTimeStatisticLabel;
     private javax.swing.JLabel armorLabel;
     private javax.swing.JTextPane championDescriptionTextPane;
     private javax.swing.JLabel championIconImage;
@@ -775,28 +1088,51 @@ public class CardPanel extends javax.swing.JFrame {
     private javax.swing.JButton findGameButton;
     private javax.swing.JLabel hpLabel;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JMenu jMenu1;
+    private javax.swing.JMenu jMenu2;
+    private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JMenuItem jMenuItem1;
+    private javax.swing.JMenuItem jMenuItem2;
+    private javax.swing.JMenuItem jMenuItem3;
+    private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
+    private javax.swing.JPanel jPanel6;
+    private javax.swing.JPanel jPanel7;
+    private javax.swing.JPanel jPanel8;
+    private javax.swing.JPanel jPanel9;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
+    private javax.swing.JScrollPane jScrollPane5;
     private javax.swing.JButton leaveButton;
+    private javax.swing.JLabel loseCountLabel;
     private javax.swing.JLabel mArmorLabel;
     private javax.swing.JLabel mdLabel;
     private javax.swing.JTextArea messageTextArea;
     private javax.swing.JTextField messageTextField;
     private javax.swing.JLabel nicknameLabel;
     private javax.swing.JButton profileButton;
+    private javax.swing.JLabel profileNameLabel;
     private javax.swing.JButton reconnectButton;
     private javax.swing.JButton returnMenuButton;
+    private javax.swing.JButton returnMenuButton1;
     private javax.swing.JLabel roleLabel;
+    private javax.swing.JButton searchButton;
+    private javax.swing.JTextField searchTextField;
     private javax.swing.JButton sendMessageButton;
     private javax.swing.JLabel title;
+    private javax.swing.JLabel totalCountLabel;
+    private javax.swing.JLabel winCountLabel;
     // End of variables declaration//GEN-END:variables
 }
 
@@ -809,7 +1145,9 @@ class Closer extends WindowAdapter {
     }
 
     public void windowClosing(WindowEvent e) {
-        client.out.println("ENDLEAVEEND");
+        if (client.out != null) {
+            client.out.println("ENDLEAVEEND");
+        }
         System.exit(0);
     }
 }

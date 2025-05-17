@@ -21,7 +21,8 @@ public abstract class Champion {
     protected double damageDealt;
     protected SpellType specialSpellType;
     protected ImageIcon icon;
-
+    protected String description;
+    
     public Champion(String name, double healthPoints, double attackDamage, double magicDamage, double physicalResist, double magicResist, int distancePoint, Ability[] abilities) {
         this.name = name;
         this.healthPoints = healthPoints;
@@ -132,6 +133,10 @@ public abstract class Champion {
     public ImageIcon getIcon() {
         return icon;
     }
+    
+    public String getDescription() {
+        return description;
+    }
 
     public void setName(String name) {
         this.name = name;
@@ -186,6 +191,9 @@ public abstract class Champion {
 
     public void setIcon(ImageIcon icon) {
         this.icon = icon;
+    }
+    public void setDescription(String desc) {
+        this.description = desc;
     }
 
     public void addAttackDamage(double attackDamage) {
