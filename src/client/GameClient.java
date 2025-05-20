@@ -18,8 +18,8 @@ public class GameClient {
     
     protected Socket socket;
     protected final int SERVER_PORT = 12345;
-    protected final String SERVER_ADDRESS = "127.0.0.1";
-
+//    protected final String SERVER_ADDRESS = "127.0.0.1";
+    protected final String SERVER_ADDRESS = "83.7.177.106"; //for global gameplay
     protected InetAddress iAddress;
     
      public GameClient(CardPanel ui, String nickname) {
@@ -136,6 +136,7 @@ public class GameClient {
                     "LOST",
                     JOptionPane.INFORMATION_MESSAGE
             );
+        ui.client.choosenChampion = null;
         ui.fightPanel.setVisible(false);
         ui.setVisible(true);
     }
@@ -146,7 +147,9 @@ public class GameClient {
     public void applyStats(String name, String total, String win, String lose, String players){
         ui.applyStats(name, total, win, lose, players);
     }
-    
+    public void applyOnlineStatus(String onlineUsers, String activeGames){
+        ui.applyOnlineStatus(onlineUsers, activeGames);
+    }
     public void gameResultLose(){
         
     }

@@ -95,6 +95,8 @@ public class CardPanel extends javax.swing.JFrame {
         chooseChampionList = new javax.swing.JList<>();
         chooseChampionLabel = new javax.swing.JLabel();
         reconnectButton = new javax.swing.JButton();
+        activeGamesLabel = new javax.swing.JLabel();
+        onlinePlayersLabel = new javax.swing.JLabel();
         ChampionsCard = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         championList = new javax.swing.JList<>();
@@ -269,6 +271,10 @@ public class CardPanel extends javax.swing.JFrame {
             }
         });
 
+        activeGamesLabel.setText("Active games:");
+
+        onlinePlayersLabel.setText("Players online:");
+
         javax.swing.GroupLayout UserMainCardLayout = new javax.swing.GroupLayout(UserMainCard);
         UserMainCard.setLayout(UserMainCardLayout);
         UserMainCardLayout.setHorizontalGroup(
@@ -277,7 +283,7 @@ public class CardPanel extends javax.swing.JFrame {
                 .addGroup(UserMainCardLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(UserMainCardLayout.createSequentialGroup()
                         .addGap(59, 59, 59)
-                        .addComponent(jScrollPane4)
+                        .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 274, Short.MAX_VALUE)
                         .addGap(93, 93, 93))
                     .addGroup(UserMainCardLayout.createSequentialGroup()
                         .addGap(67, 67, 67)
@@ -290,7 +296,11 @@ public class CardPanel extends javax.swing.JFrame {
                             .addComponent(MainOptionPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 256, Short.MAX_VALUE)
                             .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addGap(75, 75, 75)
-                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(UserMainCardLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(UserMainCardLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addComponent(activeGamesLabel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(onlinePlayersLabel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 100, Short.MAX_VALUE))))
                     .addComponent(reconnectButton))
                 .addGap(35, 35, 35))
             .addGroup(UserMainCardLayout.createSequentialGroup()
@@ -303,12 +313,18 @@ public class CardPanel extends javax.swing.JFrame {
             .addGroup(UserMainCardLayout.createSequentialGroup()
                 .addGap(65, 65, 65)
                 .addComponent(title)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(UserMainCardLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(nicknameLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(chooseChampionLabel))
+                .addGroup(UserMainCardLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(UserMainCardLayout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(UserMainCardLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(nicknameLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(chooseChampionLabel)
+                            .addComponent(activeGamesLabel)))
+                    .addGroup(UserMainCardLayout.createSequentialGroup()
+                        .addGap(17, 17, 17)
+                        .addComponent(onlinePlayersLabel)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(UserMainCardLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(UserMainCardLayout.createSequentialGroup()
@@ -588,7 +604,7 @@ public class CardPanel extends javax.swing.JFrame {
                     .addComponent(searchTextField, javax.swing.GroupLayout.DEFAULT_SIZE, 32, Short.MAX_VALUE)
                     .addComponent(searchButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 434, Short.MAX_VALUE)
+                .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 440, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -790,6 +806,9 @@ public class CardPanel extends javax.swing.JFrame {
                 chooseChampionLabel.setText("CHOOSEN CHAMPION: " + selectedChampion);
                 client.choosenChampion = activeChampion;
                 applyChampionCard();
+            }
+            else{
+                chooseChampionLabel.setText("CHOOSEN CHAMPION:");
             }
             System.out.println(selectedChampion);
         }
@@ -1065,13 +1084,17 @@ public class CardPanel extends javax.swing.JFrame {
         loseCountLabel.setText(lose);
         allTimeStatisticLabel.setText("ALL TIME STATISTICS");
     }
-    
+    public void applyOnlineStatus(String onlineUsers, String activeGames){
+        onlinePlayersLabel.setText("Players online: " + onlineUsers);
+        activeGamesLabel.setText("Active games: " + activeGames);
+    }
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel ChampionsCard;
     private javax.swing.JPanel MainOptionPanel;
     private javax.swing.JPanel ProfileCard;
     private javax.swing.JPanel UserMainCard;
+    private javax.swing.JLabel activeGamesLabel;
     private javax.swing.JLabel adLabel;
     private javax.swing.JList<String> allPlayerJList;
     private javax.swing.JLabel allTimeStatisticLabel;
@@ -1121,6 +1144,7 @@ public class CardPanel extends javax.swing.JFrame {
     private javax.swing.JTextArea messageTextArea;
     private javax.swing.JTextField messageTextField;
     private javax.swing.JLabel nicknameLabel;
+    private javax.swing.JLabel onlinePlayersLabel;
     private javax.swing.JButton profileButton;
     private javax.swing.JLabel profileNameLabel;
     private javax.swing.JButton reconnectButton;

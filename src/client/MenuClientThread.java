@@ -2,6 +2,7 @@ package client;
 
 import java.awt.*;
 import java.io.*;
+import server.GameCommand;
 
 public class MenuClientThread extends Thread{
     private BufferedReader in;
@@ -95,6 +96,7 @@ public class MenuClientThread extends Thread{
                 client.decreaseAbility(abilityIndex);
                 break;
             case "GAME_RESULT_WIN":
+                client.sendMessage(GameCommand.END.toString());
                 client.gameResult(true);
                 break;
             case "GAME_RESULT_LOSE":
@@ -107,6 +109,11 @@ public class MenuClientThread extends Thread{
                 String lose = parts[4];
                 String players = parts[5];
                 client.applyStats(target, total, win, lose, players);
+                break;
+            case "GAME_UPDATE_USERS":
+                String onlineUsers = parts[1];
+                String activeGames = parts[2];
+                client.applyOnlineStatus(onlineUsers, activeGames);
                 break;
         }
     }
