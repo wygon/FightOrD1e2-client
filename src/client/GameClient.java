@@ -18,8 +18,7 @@ public class GameClient {
     
     protected Socket socket;
     protected final int SERVER_PORT = 12345;
-//    protected final String SERVER_ADDRESS = "127.0.0.1";
-    protected final String SERVER_ADDRESS = "83.7.177.106"; //for global gameplay
+    protected String SERVER_ADDRESS = "127.0.0.1";
     protected InetAddress iAddress;
     
      public GameClient(CardPanel ui, String nickname) {
@@ -32,7 +31,8 @@ public class GameClient {
         isConnected = false;
     }
 
-    void connect() {
+    void connect(String address) {
+        if(!address.equals("")) SERVER_ADDRESS = address;
         isConnected = true;
         ui.getReconnectButton().setVisible(false);
         try {
@@ -121,7 +121,7 @@ public class GameClient {
     public void adjustClientState(String sender, String info){
         ui.fightPanel.adjustClientState(sender, info);
     }
-    public void gameResult(boolean win){
+    public void gameResult(boolean win, String duration){
         if(win)
             JOptionPane.showMessageDialog(
                     ui.fightPanel,
@@ -137,6 +137,12 @@ public class GameClient {
                     JOptionPane.INFORMATION_MESSAGE
             );
         ui.client.choosenChampion = null;
+        int durationToInt = Integer.parseInt(duration);
+        int minutes = durationToInt / 60;
+        int seconds = durationToInt % 60;
+        
+        String finalTime = (minutes < 10 ? "0" + minutes : minutes) + ":" + (seconds < 10 ? "0" + seconds : seconds);
+        ui.getGameDurationValueLabel().setText(finalTime);
         ui.fightPanel.setVisible(false);
         ui.setVisible(true);
     }

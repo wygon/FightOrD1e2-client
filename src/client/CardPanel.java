@@ -21,18 +21,18 @@ public class CardPanel extends javax.swing.JFrame {
     private static final String CHAMPIONS_SETTINGS = "champions.settings";
     private DefaultListModel<String> championListDefaultModel;
     private Champion activeChampion;
-//    private Champion choosenChampion;
+    private String address;
     GameClient client;
     protected SearchingGameWindow sgw;
     protected FightPanel fightPanel;
 
-    public CardPanel(String nickname) {
+    public CardPanel(String nickname, String address) {
         this.nickname = nickname;
+        this.address = address;
         myInitBefore();
         initComponents();
-
         this.client = new GameClient(this, nickname);
-        this.client.connect();
+        this.client.connect(address);
         myInitAfter();
     }
 
@@ -54,6 +54,8 @@ public class CardPanel extends javax.swing.JFrame {
 
         Closer closer = new Closer(client);
         addWindowListener(closer);
+        messageTextField.requestFocus();
+//        searchTextField.requestFocus();
     }
 
     public void fightStart(String gameId, String enemyName, String enemyChampion) {
@@ -97,6 +99,8 @@ public class CardPanel extends javax.swing.JFrame {
         reconnectButton = new javax.swing.JButton();
         activeGamesLabel = new javax.swing.JLabel();
         onlinePlayersLabel = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        gameDurationValueLabel = new javax.swing.JLabel();
         ChampionsCard = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         championList = new javax.swing.JList<>();
@@ -137,7 +141,6 @@ public class CardPanel extends javax.swing.JFrame {
         jLabel10 = new javax.swing.JLabel();
         loseCountLabel = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
-        jMenu1 = new javax.swing.JMenu();
         jMenu2 = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
         jMenuItem2 = new javax.swing.JMenuItem();
@@ -150,7 +153,6 @@ public class CardPanel extends javax.swing.JFrame {
         getContentPane().setLayout(new java.awt.CardLayout());
 
         title.setFont(new java.awt.Font("Century Schoolbook", 0, 100)); // NOI18N
-        title.setForeground(new java.awt.Color(255, 255, 255));
         title.setText("Fight Or Die");
         title.setName(""); // NOI18N
 
@@ -223,6 +225,9 @@ public class CardPanel extends javax.swing.JFrame {
             }
         });
         messageTextField.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                messageTextFieldKeyPressed(evt);
+            }
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 messageTextFieldKeyReleased(evt);
             }
@@ -275,6 +280,12 @@ public class CardPanel extends javax.swing.JFrame {
 
         onlinePlayersLabel.setText("Players online:");
 
+        jLabel4.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jLabel4.setText("Last game duration");
+
+        gameDurationValueLabel.setFont(new java.awt.Font("Segoe UI", 0, 36)); // NOI18N
+        gameDurationValueLabel.setText("00:00");
+
         javax.swing.GroupLayout UserMainCardLayout = new javax.swing.GroupLayout(UserMainCard);
         UserMainCard.setLayout(UserMainCardLayout);
         UserMainCardLayout.setHorizontalGroup(
@@ -304,15 +315,28 @@ public class CardPanel extends javax.swing.JFrame {
                     .addComponent(reconnectButton))
                 .addGap(35, 35, 35))
             .addGroup(UserMainCardLayout.createSequentialGroup()
-                .addGap(214, 214, 214)
-                .addComponent(title)
+                .addGroup(UserMainCardLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(UserMainCardLayout.createSequentialGroup()
+                        .addGap(214, 214, 214)
+                        .addComponent(title))
+                    .addGroup(UserMainCardLayout.createSequentialGroup()
+                        .addGap(35, 35, 35)
+                        .addGroup(UserMainCardLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(UserMainCardLayout.createSequentialGroup()
+                                .addGap(6, 6, 6)
+                                .addComponent(gameDurationValueLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         UserMainCardLayout.setVerticalGroup(
             UserMainCardLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(UserMainCardLayout.createSequentialGroup()
-                .addGap(65, 65, 65)
-                .addComponent(title)
+                .addGap(22, 22, 22)
+                .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(UserMainCardLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(title)
+                    .addComponent(gameDurationValueLabel))
                 .addGroup(UserMainCardLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(UserMainCardLayout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -569,6 +593,11 @@ public class CardPanel extends javax.swing.JFrame {
                 searchTextFieldActionPerformed(evt);
             }
         });
+        searchTextField.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                searchTextFieldKeyPressed(evt);
+            }
+        });
 
         searchButton.setFont(new java.awt.Font("Segoe UI", 0, 10)); // NOI18N
         searchButton.setText("SEARCH");
@@ -604,7 +633,7 @@ public class CardPanel extends javax.swing.JFrame {
                     .addComponent(searchTextField, javax.swing.GroupLayout.DEFAULT_SIZE, 32, Short.MAX_VALUE)
                     .addComponent(searchButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 440, Short.MAX_VALUE)
+                .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 434, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -649,10 +678,7 @@ public class CardPanel extends javax.swing.JFrame {
 
         getContentPane().add(ProfileCard, "ProfileCard");
 
-        jMenu1.setText("File");
-        jMenuBar1.add(jMenu1);
-
-        jMenu2.setText("Edit");
+        jMenu2.setText("Layout");
 
         jMenuItem1.setText("FlatLaf Dark");
         jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
@@ -772,6 +798,7 @@ public class CardPanel extends javax.swing.JFrame {
         }
         CardLayout cl = (CardLayout) getContentPane().getLayout();
         cl.show(getContentPane(), "ProfileCard");
+        searchTextField.requestFocus(true);
         System.out.println("Profile button clicked");
     }//GEN-LAST:event_profileButtonActionPerformed
 
@@ -822,7 +849,7 @@ public class CardPanel extends javax.swing.JFrame {
 
     private void reconnectButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_reconnectButtonActionPerformed
         // TODO add your handling code here:
-        client.connect();
+        client.connect(address);
     }//GEN-LAST:event_reconnectButtonActionPerformed
 
     private void searchTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchTextFieldActionPerformed
@@ -871,6 +898,26 @@ public class CardPanel extends javax.swing.JFrame {
             searchTextField.setText(selectedPlayer);
         }
     }//GEN-LAST:event_allPlayerJListValueChanged
+
+    private void messageTextFieldKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_messageTextFieldKeyPressed
+        // TODO add your handling code here:
+        if(evt.getKeyCode() == KeyEvent.VK_ENTER){
+            client.sendMessage(messageTextField.getText());
+            messageTextField.setText("");
+        }
+    }//GEN-LAST:event_messageTextFieldKeyPressed
+
+    private void searchTextFieldKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_searchTextFieldKeyPressed
+        // TODO add your handling code here:
+        if(evt.getKeyCode() == KeyEvent.VK_ENTER){
+            if(!searchTextField.getText().isEmpty())
+                client.sendMessage(GameCommand.GET_STATS.toString() + ">" + searchTextField.getText());
+        }
+    }//GEN-LAST:event_searchTextFieldKeyPressed
+    
+    public JLabel getGameDurationValueLabel(){
+        return gameDurationValueLabel;
+    }
     
     public JTextArea getMessageTextArea() {
         return messageTextArea;
@@ -896,42 +943,6 @@ public class CardPanel extends javax.swing.JFrame {
         return championListModel;
     }
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(CardPanel.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(CardPanel.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(CardPanel.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(CardPanel.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                CardPanel lobby = new CardPanel("wygon");
-                lobby.setVisible(true);
-//                lobby.connect();
-            }
-        });
-    }
 
     //Configuring champions
     private void configureChampion(Champion champion, String[] parts) {
@@ -1084,6 +1095,7 @@ public class CardPanel extends javax.swing.JFrame {
         loseCountLabel.setText(lose);
         allTimeStatisticLabel.setText("ALL TIME STATISTICS");
     }
+   
     public void applyOnlineStatus(String onlineUsers, String activeGames){
         onlinePlayersLabel.setText("Players online: " + onlineUsers);
         activeGamesLabel.setText("Active games: " + activeGames);
@@ -1109,14 +1121,15 @@ public class CardPanel extends javax.swing.JFrame {
     private javax.swing.JLabel chooseChampionLabel;
     private javax.swing.JList<String> chooseChampionList;
     private javax.swing.JButton findGameButton;
+    private javax.swing.JLabel gameDurationValueLabel;
     private javax.swing.JLabel hpLabel;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel8;
-    private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;

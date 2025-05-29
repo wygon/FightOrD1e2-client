@@ -6,6 +6,7 @@ package client;
 
 import javax.swing.UIManager;
 import com.formdev.flatlaf.FlatDarkLaf;
+import java.awt.event.KeyEvent;
 
 /**
  *
@@ -35,6 +36,9 @@ public class LoginDialog extends javax.swing.JDialog {
         nicknameTextField = new javax.swing.JTextField();
         enterButton = new javax.swing.JButton();
         nicknameLabel = new javax.swing.JLabel();
+        serverAddressLabel = new javax.swing.JLabel();
+        serverAddressTextField = new javax.swing.JTextField();
+        jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -54,6 +58,9 @@ public class LoginDialog extends javax.swing.JDialog {
             }
         });
         nicknameTextField.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                nicknameTextFieldKeyPressed(evt);
+            }
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 nicknameTextFieldKeyReleased(evt);
             }
@@ -69,6 +76,31 @@ public class LoginDialog extends javax.swing.JDialog {
 
         nicknameLabel.setText("Type your nickname:");
 
+        serverAddressLabel.setText("Server adress");
+
+        serverAddressTextField.setName("nickname"); // NOI18N
+        serverAddressTextField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                serverAddressTextFieldActionPerformed(evt);
+            }
+        });
+        serverAddressTextField.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+            public void propertyChange(java.beans.PropertyChangeEvent evt) {
+                serverAddressTextFieldPropertyChange(evt);
+            }
+        });
+        serverAddressTextField.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                serverAddressTextFieldKeyPressed(evt);
+            }
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                serverAddressTextFieldKeyReleased(evt);
+            }
+        });
+
+        jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 10)); // NOI18N
+        jLabel1.setText("(empty = localhost)");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -81,7 +113,10 @@ public class LoginDialog extends javax.swing.JDialog {
                         .addComponent(enterButton)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(nicknameLabel)
-                            .addComponent(nicknameTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(nicknameTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(serverAddressLabel)
+                            .addComponent(serverAddressTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel1))))
                 .addGap(32, 32, 32))
         );
         layout.setVerticalGroup(
@@ -93,9 +128,15 @@ public class LoginDialog extends javax.swing.JDialog {
                 .addComponent(nicknameLabel)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(nicknameTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(serverAddressLabel)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(serverAddressTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel1)
+                .addGap(2, 2, 2)
                 .addComponent(enterButton)
-                .addContainerGap(40, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         nicknameTextField.getAccessibleContext().setAccessibleName("");
@@ -109,15 +150,7 @@ public class LoginDialog extends javax.swing.JDialog {
 
     private void enterButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_enterButtonActionPerformed
         // TODO add your handling code here:
-        String nick = nicknameTextField.getText().trim();
-        
-        if(!nick.isEmpty()) {
-            this.dispose();
-            CardPanel cp = new CardPanel(nick);
-            cp.setLocationRelativeTo(null);
-            cp.setVisible(true);
-//            cp.connect();
-        }
+        login();
     }//GEN-LAST:event_enterButtonActionPerformed
 
     private void nicknameTextFieldPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_nicknameTextFieldPropertyChange
@@ -130,57 +163,48 @@ public class LoginDialog extends javax.swing.JDialog {
         enterButton.setEnabled(nickname != null && !nickname.isBlank() && nickname.length() < 12);
         String nnLabel = nickname.length() < 12 ? "Type your nickname:" : "Too long nickname!";
         nicknameLabel.setText(nnLabel);
-        System.out.println("Relased");
     }//GEN-LAST:event_nicknameTextFieldKeyReleased
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(LoginDialog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(LoginDialog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(LoginDialog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(LoginDialog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+    private void nicknameTextFieldKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_nicknameTextFieldKeyPressed
+        // TODO add your handling code here:
+        if(evt.getKeyCode() == KeyEvent.VK_ENTER){
+            login();
         }
-        //</editor-fold>
-        try {
-            UIManager.setLookAndFeel(new FlatDarkLaf());
-        } catch(Exception ex) {System.out.println("Nie udalo sie zaladowac FlatLaf Dark " + ex);}
-        /* Create and display the dialog */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                LoginDialog dialog = new LoginDialog(new javax.swing.JFrame(), true);
-                dialog.addWindowListener(new java.awt.event.WindowAdapter() {
-                    @Override
-                    public void windowClosing(java.awt.event.WindowEvent e) {
-                        System.exit(0);
-                    }
-                });
-                dialog.setVisible(true);
-            }
-        });
+    }//GEN-LAST:event_nicknameTextFieldKeyPressed
+
+    private void serverAddressTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_serverAddressTextFieldActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_serverAddressTextFieldActionPerformed
+
+    private void serverAddressTextFieldPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_serverAddressTextFieldPropertyChange
+        // TODO add your handling code here:
+    }//GEN-LAST:event_serverAddressTextFieldPropertyChange
+
+    private void serverAddressTextFieldKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_serverAddressTextFieldKeyPressed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_serverAddressTextFieldKeyPressed
+
+    private void serverAddressTextFieldKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_serverAddressTextFieldKeyReleased
+        // TODO add your handling code here:
+    }//GEN-LAST:event_serverAddressTextFieldKeyReleased
+    private void login(){
+        String nick = nicknameTextField.getText().trim();
+        String address = serverAddressTextField.getText().trim();
+        if(!nick.isEmpty()) {
+            this.dispose();
+            CardPanel cp = new CardPanel(nick, address);
+            cp.setLocationRelativeTo(null);
+            cp.setVisible(true);
+        }
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton enterButton;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel loginText;
     private javax.swing.JLabel nicknameLabel;
     private javax.swing.JTextField nicknameTextField;
+    private javax.swing.JLabel serverAddressLabel;
+    private javax.swing.JTextField serverAddressTextField;
     // End of variables declaration//GEN-END:variables
 }

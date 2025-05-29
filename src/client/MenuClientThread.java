@@ -61,15 +61,15 @@ public class MenuClientThread extends Thread{
                 gameId = parts[1];
                 String enemyName = parts[2];
                 String enemyChampion = parts[3];
-//                ui.getMessageTextArea().append("GAMEID: " + gameId);
-//                ui.getMessageTextArea().append("YOUR OPPONENT IS " + enemyName + "\n");
                 client.foundOponent(gameId, enemyName, enemyChampion);
                 break;
             case "GAME_FORFEIT":
-                client.gameResult(false);
+                String duration = parts[1];  
+                client.gameResult(false, duration);
                 break;
             case "GAME_ENEMY_FORFEIT":
-                client.gameResult(true);
+                duration = parts[1];
+                client.gameResult(true, duration);
                 break;
             case "GAME_NOT_YOUR_TURN":
                 client.notMyTurn();
@@ -96,11 +96,13 @@ public class MenuClientThread extends Thread{
                 client.decreaseAbility(abilityIndex);
                 break;
             case "GAME_RESULT_WIN":
+                duration = parts[1];
                 client.sendMessage(GameCommand.END.toString());
-                client.gameResult(true);
+                client.gameResult(true, duration);
                 break;
             case "GAME_RESULT_LOSE":
-                client.gameResult(false);
+                duration = parts[1];
+                client.gameResult(false, duration);
                 break;
             case "GAME_GET_STATS":
                 target = parts[1];
